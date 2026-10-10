@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمضان مبارك</title>
+    
+    <!-- خطوط عربية احترافية من جوجل -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0a0a0f;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --text-main: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* سماء الليل والنجوم */
+        #stars-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 80%, #1a1a2e, #050505);
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            animation: twinkle linear infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.2; transform: scale(0.8); }
+        }
+
+        /* الهلال */
+        .moon {
+            position: absolute;
+            top: 10vh;
+            right: 15vw;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            /* طريقة ذكية لرسم هلال باستعمال الظل فقط */
+            box-shadow: 20px 20px 0 0 var(--gold-light);
+            filter: drop-shadow(0 0 15px rgba(243, 229, 171, 0.4));
+            animation: floatMoon 6s ease-in-out infinite;
+        }
+
+        @keyframes floatMoon {
+            0%, 100% { transform: translateY(0) rotate(-10deg); }
+            50% { transform: translateY(-10px) rotate(-15deg); }
+        }
+
+        /* مشهد الكعبة 3D */
+        .scene {
+            perspective: 1000px;
+            margin-top: 18vh;
+            margin-bottom: 5vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        .kaaba {
+            width: 120px;
+            height: 140px;
+            position: relative;
+            transform-style: preserve-3d;
+            /* زاوية الرؤية */
+            transform: rotateX(-15deg) rotateY(-35deg);
+            animation: rotateKaaba 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes rotateKaaba {
+            0% { transform: rotateX(-15deg) rotateY(-30deg); }
+            100% { transform: rotateX(-15deg) rotateY(-40deg); }
+        }
+
+        .face {
+            position: absolute;
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+        }
+
+        /* الواجهة الأمامية */
+        .front {
+            width: 120px; height: 140px;
+            transform: translateZ(60px);
+        }
+
+        /* الواجهة الجانبية (اليمنى) */
+        .right {
+            width: 120px; height: 140px;
+            transform: rotateY(90deg) translateZ(60px);
+            background: #050505;
+        }
+
+        /* السطح */
+        .top {
+            width: 120px; height: 120px;
+            transform: rotateX(90deg) translateZ(70px);
+            background: #151515;
+            top: 10px; /* توسيط السطح مع الطول */
+        }
+
+        /* الحزام الذهبي */
+        .gold-band {
+            position: absolute;
+            top: 30px;
+            width: 100%;
+            height: 18px;
+            background: linear-gradient(90deg, #996515, #ffd700, #996515);
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+        }
+
+        /* باب الكعبة */
+        .door {
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            width: 35px;
+            height: 55px;
+            background: #222;
+            border: 2px solid var(--gold);
+            border-bottom: none;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        /* النصوص */
+        .greeting-container {
+            text-align: center;
+            z-index: 10;
+            padding: 0 20px;
+            opacity: 0;
+            animation: fadeInText 2s ease-out 1s forwards;
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Amiri', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .year-badge {
+            display: inline-block;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            padding: 5px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        /* استجابة الشاشات الصغيرة جدًا */
+        @media (max-width: 360px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1rem; }
+            .scene { transform: scale(0.85); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- حاوية النجوم المبرمجة بالـ JS -->
+    <div id="stars-container"></div>
+
+    <div class="moon"></div>
+
+    <div class="scene">
+        <div class="kaaba">
+            <!-- الواجهة الأمامية (فيها الباب) -->
+            <div class="face front">
+                <div class="gold-band"></div>
+                <div class="door"></div>
+            </div>
+            <!-- الواجهة اليمنى -->
+            <div class="face right">
+                <div class="gold-band"></div>
+            </div>
+            <!-- السطح -->
+            <div class="face top"></div>
+        </div>
+    </div>
+
+    <div class="greeting-container">
+        <h1>رمضان مبارك</h1>
+        <h2>يتقبل الله منا ومنكم صالح الأعمال<br>وأعاننا على صيامه وقيامه</h2>
+        <div class="year-badge">2026</div>
+    </div>
+
+    <script>
+        // توليد النجوم بشكل عشوائي عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('stars-container');
+            const starsCount = 150; // عدد النجوم
+
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // أحجام عشوائية بين 1 و 3 بيكسل
+                const size = Math.random() * 2 + 1;
+                
+                // أماكن عشوائية في الشاشة
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // توقيت عشوائي للوميض (Twinkle)
+                const duration = Math.random() * 3 + 2; 
+                const delay = Math.random() * 5;
+
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${x}vw`;
+                star.style.top = `${y}vh`;
+                star.style.animationDuration = `${duration}s`;
+                star.style.animationDelay = `${delay}s`;
+
+                container.appendChild(star);
+            }
+        });
+    </script>
+</body>
+</html>
